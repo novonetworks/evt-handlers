@@ -6,6 +6,7 @@
     "module": "lib/index.es.js",
     "jsnext:main": "lib/index.es.js",
     "typings": "lib/index.d.ts",
+    "repository": "https://github.com/novonetworks/evt-handlers",
     "license": "MIT",
     "scripts": {
         "start": "ts-node -r tsconfig-paths/register src/index.ts",
