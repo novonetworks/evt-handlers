@@ -1,9 +1,21 @@
 # Event Handlers
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > Event Handlers
+
+
+## Installation
+
+```bash
+# NPM
+npm i evt-handlers
+
+# Yarn
+yarn add evt-handlers
+```
+
 ## Usage
 
-// notify.ts
+### notify.ts
 ```ts
 import { EventHandlers, Events, Handler, Disposable } from 'evt-handlers'
 
@@ -44,7 +56,7 @@ export class NotifyEventHandler {
 }
 ```
 
-// view-model.ts
+### view-model.ts
 ```ts
 export class AppViewModel {
     // ...
@@ -79,7 +91,7 @@ export class AppViewModel {
 }
 ```
 
-// App.tsx
+### App.tsx
 ```ts
 export function App() {
     const vm = useContext(AppViewModelContext)
@@ -119,8 +131,6 @@ export function App() {
     return <div>Example</div>
 }
 ```
-
-## Installation
 
 ## License
 
