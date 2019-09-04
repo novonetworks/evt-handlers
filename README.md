@@ -64,7 +64,8 @@ export class AppViewModel {
     public readonly notify: NotifyEventHandler = new NotifyEventHandler()
     public readonly historyEvent: EventHandlers = new EventHandlers()
 
-    public *fetchData(query: string) {
+    @asyncAction
+    public *tryToLogin(username: string, password: string) {
         this.isLoading = true
         this.data = null
         this.error = null
