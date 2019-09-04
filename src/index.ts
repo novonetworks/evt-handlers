@@ -35,7 +35,7 @@ export class EventHandlers {
 
             if (!handler) {
                 throw new Error(
-                    `identifier [ ${identifier} ] not exist on EventHandlers`,
+                    `[ ${identifier} ] handler is not exist on EventHandlers`,
                 )
             }
 

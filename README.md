@@ -3,8 +3,8 @@
 > Event Handlers
 ## Usage
 
-```ts
 // notify.ts
+```ts
 import { EventHandlers, Events, Handler, Disposable } from 'evt-handlers'
 
 interface Notify {
@@ -38,12 +38,14 @@ export class NotifyEventHandler {
         this.eventHandler.getNotifiers('error')(message, options)
     }
 
-    public onNotify(notify: Notify | Handler): Disposable {
+    public onNotify(notify: Notify): Disposable {
         return this.eventHandler.on(notify as Events)
     }
 }
+```
 
 // view-model.ts
+```ts
 export class AppViewModel {
     // ...
 
@@ -75,8 +77,10 @@ export class AppViewModel {
         return this.historyEvent.getNotifiers()
     }
 }
+```
 
 // App.tsx
+```ts
 export function App() {
     const vm = useContext(AppViewModelContext)
     const notify = useNotify()

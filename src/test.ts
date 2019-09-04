@@ -85,6 +85,37 @@ describe('NotifyEventHandler', () => {
         expect(notify.eventHandler['events'!].size).toEqual(0)
     })
 
+    test('object style event do not notify with empty identifier', () => {
+        const notify = new EventHandlers()
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const info = jest.fn((..._args: any[]) => {})
+
+        notify.on({
+            info,
+        })
+
+        notify.getNotifiers()('info')
+        expect(info).not.toBeCalledWith()
+    })
+
+    test('object style event do not notify with wrong identifier', () => {
+        const notify = new EventHandlers()
+        const catcher = jest.fn()
+
+        notify.on({})
+
+        try {
+            notify.getNotifiers('alert')('alert')
+        } catch (e) {
+            catcher(e)
+        }
+
+        expect(catcher).toBeCalledWith(
+            new Error('[ alert ] handler is not exist on EventHandlers'),
+        )
+    })
+
     test('function style event notify correctly', () => {
         const notify = new EventHandlers()
 
@@ -99,5 +130,8 @@ describe('NotifyEventHandler', () => {
         expect(notify['events'!].size).toEqual(1)
         disposable()
         expect(notify['events'!].size).toEqual(0)
+
+        notify.getNotifiers()('info')
+        expect(cb).toBeCalledWith('info')
     })
 })
