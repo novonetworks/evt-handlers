@@ -1,6 +1,6 @@
 {
     "name": "evt-handlers",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "event handlers for common purpose",
     "main": "lib/index.js",
     "module": "lib/index.es.js",
