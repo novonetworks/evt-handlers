@@ -1,6 +1,6 @@
 # Event Handlers
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
-> Event Handlers
+> ViewModel Event handler for platform dependency isolation
 
 
 ## Installation
@@ -13,7 +13,7 @@ npm i evt-handlers
 yarn add evt-handlers
 ```
 
-## Usage
+## Usage (Example)
 
 ### notify.ts
 ```ts
@@ -50,7 +50,7 @@ export class NotifyEventHandler {
         this.eventHandler.getNotifiers('error')(message, options)
     }
 
-    public onNotify(notify: Notify): Disposable {
+    public on(notify: Notify): Disposable {
         return this.eventHandler.on(notify as Events)
     }
 }
@@ -71,9 +71,9 @@ export class AppViewModel {
         this.error = null
 
         try {
-            const res = yield repository.getData(query)
-            this.data = res.data
-            this.history(query)
+            const res = yield authService.login(username, password)
+            this.user = res.data
+            this.navigateTo('/personal')
         } catch (e) {
             this.error = e
             this.notify.error(e)
@@ -82,12 +82,12 @@ export class AppViewModel {
         this.isLoading = false
     }
 
-    public onHistory(callback: (query: string) => void): Disposable {
-        return this.history.on(callback)
+    public onHistory(callback: (pathname: string) => void): Disposable {
+        return this.historyEvent.on(callback)
     }
 
-    private get history() {
-        return this.historyEvent.getNotifiers()
+    private navigateTo(pathname: string): void {
+        this.historyEvent.getNotifiers()(pathname)
     }
 }
 ```
@@ -97,25 +97,26 @@ export class AppViewModel {
 export function App() {
     const vm = useContext(AppViewModelContext)
     const notify = useNotify()
-    const { location } = useRouter()
+    const [t] = useTranslation()
+    const { history } = useRouter()
 
     useEffect(
         () =>
-            vm.notify.onNotify({
+            vm.notify.on({
                 info(message, options) {
-                    notify.info(t(message, options))
+                    notify.info(t(message), options)
                 },
                 notice(message, options) {
-                    notify.notice(t(message, options))
+                    notify.notice(t(message), options)
                 },
                 success(message, options) {
-                    notify.success(t(message, options))
+                    notify.success(t(message), options)
                 },
                 error(message, options) {
-                    notify.error(t(message, options))
+                    notify.error(t(message), options)
                 },
                 alert(message, options) {
-                    notify.alert(t(message, options))
+                    notify.alert(t(message), options)
                 },
             }),
         [vm.notify, notify],
@@ -123,10 +124,10 @@ export function App() {
 
     useEffect(
         () =>
-            vm.onHistory((query) => {
-                location.search = query
+            vm.onHistory((pathname: string) => {
+                history.push(pathname)
             }),
-        [vm, location.search],
+        [vm, history],
     )
 
     return <div>Example</div>
