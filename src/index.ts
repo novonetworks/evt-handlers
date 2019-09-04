@@ -18,12 +18,16 @@ export class EventHandlers {
         }
     }
 
-    public getNotifiers(identifier: string): Handler {
+    public getNotifiers(identifier?: string): Handler {
         const handlers: Handler[] = []
 
         for (const event of this.events) {
             if (typeof event === 'function') {
                 handlers.push(event)
+                continue
+            }
+
+            if (!identifier) {
                 continue
             }
 

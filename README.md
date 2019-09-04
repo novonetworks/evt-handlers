@@ -1,7 +1,120 @@
 # Event Handlers
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > Event Handlers
-## Using
+## Usage
+
+```ts
+// notify.ts
+import { EventHandlers, Events, Handler, Disposable } from 'evt-handlers'
+
+interface Notify {
+    alert?: (message: string, options?: Options) => void
+    notice?: (message: string, options?: Options) => void
+    info?: (message: string, options?: Options) => void
+    success?: (message: string, options?: Options) => void
+    error?: (message: string, options?: Options) => void
+}
+
+export class NotifyEventHandler {
+    public eventHandler = new EventHandlers()
+
+    public alert(message: string, Options): void {
+        this.eventHandler.getNotifiers('alert')(message, options)
+    }
+
+    public notice(message: string, options?: Options): void {
+        this.eventHandler.getNotifiers('notice')(message, options)
+    }
+
+    public info(message: string, options?: Options): void {
+        this.eventHandler.getNotifiers('info')(message, options)
+    }
+
+    public success(message: string, options?: Options): void {
+        this.eventHandler.getNotifiers('success')(message, options)
+    }
+
+    public error(message: string, options?: Options): void {
+        this.eventHandler.getNotifiers('error')(message, options)
+    }
+
+    public onNotify(notify: Notify | Handler): Disposable {
+        return this.eventHandler.on(notify as Events)
+    }
+}
+
+// view-model.ts
+export class AppViewModel {
+    // ...
+
+    public readonly notify: NotifyEventHandler = new NotifyEventHandler()
+    public readonly historyEvent: EventHandlers = new EventHandlers()
+
+    public *fetchData(query: string) {
+        this.isLoading = true
+        this.data = null
+        this.error = null
+
+        try {
+            const res = yield repository.getData(query)
+            this.data = res.data
+            this.history(query)
+        } catch (e) {
+            this.error = e
+            this.notify.error(e)
+        }
+
+        this.isLoading = false
+    }
+
+    public onHistory(callback: (query: string) => void): Disposable {
+        return this.history.on(callback)
+    }
+
+    private get history() {
+        return this.historyEvent.getNotifiers()
+    }
+}
+
+// App.tsx
+export function App() {
+    const vm = useContext(AppViewModelContext)
+    const notify = useNotify()
+    const { location } = useRouter()
+
+    useEffect(
+        () =>
+            vm.notify.onNotify({
+                info(message, options) {
+                    notify.info(t(message, options))
+                },
+                notice(message, options) {
+                    notify.notice(t(message, options))
+                },
+                success(message, options) {
+                    notify.success(t(message, options))
+                },
+                error(message, options) {
+                    notify.error(t(message, options))
+                },
+                alert(message, options) {
+                    notify.alert(t(message, options))
+                },
+            }),
+        [vm.notify, notify],
+    )
+
+    useEffect(
+        () =>
+            vm.onHistory((query) => {
+                location.search = query
+            }),
+        [vm, location.search],
+    )
+
+    return <div>Example</div>
+}
+```
 
 ## Installation
 
