@@ -86,18 +86,18 @@ describe('NotifyEventHandler', () => {
     })
 
     test('function style event notify correctly', () => {
-        const notify = new NotifyEventHandler()
+        const notify = new EventHandlers()
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const cb = jest.fn((..._args: any[]) => {})
 
-        const disposable = notify.onNotify(cb)
+        const disposable = notify.on(cb)
 
-        notify.info('info')
-        expect(cb).toBeCalledWith('info', undefined)
+        notify.getNotifiers()('info')
+        expect(cb).toBeCalledWith('info')
 
-        expect(notify.eventHandler['events'!].size).toEqual(1)
+        expect(notify['events'!].size).toEqual(1)
         disposable()
-        expect(notify.eventHandler['events'!].size).toEqual(0)
+        expect(notify['events'!].size).toEqual(0)
     })
 })

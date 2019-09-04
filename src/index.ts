@@ -34,7 +34,9 @@ export class EventHandlers {
             const handler = event[identifier]
 
             if (!handler) {
-                continue
+                throw new Error(
+                    `identifier [ ${identifier} ] not exist on EventHandlers`,
+                )
             }
 
             handlers.push(handler)
