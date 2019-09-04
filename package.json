@@ -10,7 +10,7 @@
     "scripts": {
         "start": "ts-node -r tsconfig-paths/register src/index.ts",
         "build": "rollup -c",
-        "lint": "eslint --ext .ts,.tsx src test",
+        "lint": "eslint --ext .ts,.tsx src",
         "test": "jest --colors --watchAll",
         "test:ci": "cross-env CI=true jest --colors --coverage",
         "format": "prettier --write \"src/**/*\"",

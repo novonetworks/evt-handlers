@@ -40,21 +40,16 @@ describe('NotifyEventHandler', () => {
     test('object style event notify correctly', () => {
         const notify = new NotifyEventHandler()
 
-        const info = jest.fn((...args: any[]) => {
-            console.log(args)
-        })
-        const notice = jest.fn((...args: any[]) => {
-            console.log(args)
-        })
-        const success = jest.fn((...args: any[]) => {
-            console.log(args)
-        })
-        const error = jest.fn((...args: any[]) => {
-            console.log(args)
-        })
-        const alert = jest.fn((...args: any[]) => {
-            console.log(args)
-        })
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const info = jest.fn((..._args: any[]) => {})
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const notice = jest.fn((..._args: any[]) => {})
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const success = jest.fn((..._args: any[]) => {})
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const error = jest.fn((..._args: any[]) => {})
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const alert = jest.fn((..._args: any[]) => {})
 
         const disposable = notify.onNotify({
             info(message, options) {

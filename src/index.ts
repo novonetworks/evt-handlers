@@ -13,7 +13,7 @@ export class EventHandlers {
     public on(event: Events): Disposable {
         this.events.add(event)
 
-        return () => {
+        return (): void => {
             this.events.delete(event)
         }
     }
