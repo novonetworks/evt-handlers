@@ -134,7 +134,7 @@ export function App() {
 
 ## License
 
-MIT © Ryan Yang
+MIT © [Novonetworks](http://www.novonetworks.com)
 
 [npm-image]: https://badge.fury.io/js/evt-handlers.svg
 [npm-url]: https://npmjs.org/package/evt-handlers
