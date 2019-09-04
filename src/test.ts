@@ -88,9 +88,8 @@ describe('NotifyEventHandler', () => {
     test('function style event notify correctly', () => {
         const notify = new NotifyEventHandler()
 
-        const cb = jest.fn((...args: any[]) => {
-            console.log(args)
-        })
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const cb = jest.fn((..._args: any[]) => {})
 
         const disposable = notify.onNotify(cb)
 
