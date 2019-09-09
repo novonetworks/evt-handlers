@@ -7,6 +7,6 @@ src
 !package.json
 *.json
 wallaby.js
-webpack.config.js
+rollup.config.js
 *.lock
 coverage

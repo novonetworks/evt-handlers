@@ -9,7 +9,6 @@
     "repository": "https://github.com/novonetworks/evt-handlers",
     "license": "MIT",
     "scripts": {
-        "start": "ts-node -r tsconfig-paths/register src/index.ts",
         "build": "rollup -c",
         "lint": "eslint --ext .ts,.tsx src",
         "test": "jest --colors --watchAll",
@@ -57,7 +56,12 @@
             "prettier/@typescript-eslint"
         ]
     },
-    "eslintIgnore": ["node_modules/**/*", "lib/**/*", "wallaby.js"],
+    "eslintIgnore": [
+        "node_modules/**/*",
+        "lib/**/*",
+        "wallaby.js",
+        "rollup.config.js"
+    ],
     "prettier": {
         "parser": "typescript",
         "trailingComma": "all",
@@ -95,9 +99,6 @@
         "rollup-plugin-ts-paths": "^1.0.3",
         "rollup-plugin-typescript2": "^0.24.0",
         "ts-jest": "^24.0.2",
-        "ts-loader": "^6.0.4",
-        "ts-node": "^8.3.0",
-        "tsconfig-paths": "^3.8.0",
         "tslib": "^1.10.0",
         "typescript": "^3.6.2"
     },
